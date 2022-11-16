@@ -3,7 +3,23 @@ import Head from 'next/head'
 import styles from '../../styles/Details.module.css'
 import Link from 'next/link'
 
-export async function getServerSideProps({ params }) {
+// SSG Below
+export async function getStaticPaths() {
+  const res = await fetch(
+    'https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json'
+  )
+
+  const pokemon = await res.json()
+
+  return {
+    paths: pokemon.map((pokemon) => ({
+      params: { id: pokemon.id.toString() },
+    })),
+    fallback: false,
+  }
+}
+
+export async function getStaticProps({ params }) {
   const res = await fetch(
     `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
   )
@@ -14,6 +30,19 @@ export async function getServerSideProps({ params }) {
     },
   }
 }
+
+// SSR Below
+// export async function getServerSideProps({ params }) {
+//   const res = await fetch(
+//     `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
+//   )
+
+//   return {
+//     props: {
+//       pokemon: await res.json(),
+//     },
+//   }
+// }
 
 export default function Details({ pokemon }) {
   // const {

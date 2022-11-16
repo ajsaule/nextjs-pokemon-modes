@@ -5,7 +5,20 @@ import Link from 'next/link'
 
 // makes a request to services, gathers up all that data and returns and object that has props in it
 // SSR can be used in conjunction with client side rendering, some data in SSG (Client side rendering) and some in SSR, depending on the use case
-export async function getServerSideProps() {
+// export async function getServerSideProps() {
+//   const res = await fetch(
+//     'https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json'
+//   )
+
+//   return {
+//     props: {
+//       pokemon: await res.json(),
+//     },
+//   }
+// }
+
+//SSG Below
+export async function getStaticProps() {
   const res = await fetch(
     'https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json'
   )
@@ -16,6 +29,21 @@ export async function getServerSideProps() {
     },
   }
 }
+
+/* 
+  SSR would be best to use in something like an e-commerce website for a search functionality, you don't know ahead of time what your queries will be.
+  Running a server means, well, running a server! You gotta monitor it, you have to make sure it's up and running all the time, you have to scale it when your site gets big.
+  so what if we had a system where we just at build time built out all these pages and then deploy them to a static asset store. 
+    - There's no server! There's nothing to go down :) 
+    - Turns out you can do that in Next.js which is awesome 
+    - AND you can even do it on the same site that are server side rendered.
+      - You can have some pages that are CSR, and some pages that are SSR, some pages that are SSG 
+*/
+
+/* 
+  SSG 
+
+*/
 
 export default function Home({ pokemon }: { pokemon: any }) {
   // const [pokemon, setPokemon] = useState([])
