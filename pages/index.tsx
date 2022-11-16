@@ -17,7 +17,7 @@ export async function getServerSideProps() {
   }
 }
 
-export default function Home({ pokemon }) {
+export default function Home({ pokemon }: { pokemon: any }) {
   // const [pokemon, setPokemon] = useState([])
 
   // useEffect(() => {
