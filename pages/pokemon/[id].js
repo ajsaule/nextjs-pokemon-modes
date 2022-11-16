@@ -31,6 +31,11 @@ export async function getStaticProps({ params }) {
   }
 }
 
+/* 
+  SSR or CSR will fetch the latest data from endpoints if they have been changed in some way. 
+  SSG will not, it will simply build the files and populate them with the right data at build time. 
+*/
+
 // SSR Below
 // export async function getServerSideProps({ params }) {
 //   const res = await fetch(
